@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <div class="container">
+        <div class="row" style="padding-left:200px ;margin-left:-100px;
+  margin-right:-100px;">
+        
+            <h2>Sales Analytics Dashboard</h2>
+            
+                
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="padding: 5px;">
+            <h3>Overview</h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <!--Stats Start-->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Statistics
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a class="text-decoration-none text-dark" href="staff.html">
+                                <div class="card my-card shadow text-center p-3">
+                                    <h4>Orders <i class="fas fa-users"></i></h4>
+                                    <h5>5700</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="text-decoration-none text-dark" href="product.html">
+                                <div class="card my-card shadow text-center p-3">
+                                    <h4>Revenue <i class="fas fa-box"></i></h4>
+                                    <h5>₹ 25,00,000</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="text-decoration-none text-dark" href="order.html">
+                                <div class="card my-card shadow text-center p-3">
+                                    <h4>Supply <i class="fas fa-shipping-fast"></i></h4>
+                                    <h5>10,000 Items</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="text-decoration-none text-dark" href="order.html">
+                                <div class="card my-card shadow text-center p-3">
+                                    <h4>Demand  <i class="fas fa-shipping-fast"></i></h4>
+                                    <h5>12,000 Items</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Stats End-->
+        <!--Right Graph Start-->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Information
+                </div>
+                <div class="card-body">
+                    <marquee behavior="" direction="">
+                        <h3 class="my-4">This is the Information</h3>
+                    </marquee>
+                </div>
+            </div>
+        </div>
+        <!--Right Graph End-->
+    </div>
+    
+    <!--Graphs Start-->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Graphs
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="chartBox">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="chartBox">
+                                <canvas id="myChart_1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" style="margin-top: 20px;">
+                            <div class="chartBox">
+                                <canvas id="myChart_2"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 20px;">
+                            <div class="chartBox">
+                                <canvas id="myChart_3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Graphs End-->
+    </div>
+    
+    <!--Big Graph start-->
+    <div class="card-body" style="margin-left: -18px;">
+        <div class="row mt-4">
+            <div class="col-md-12" >
+                <div class="chart-container">
+                    <canvas id="myChart_4"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Big Graph End-->
+    <div class="row mt-4" style="column-gap: 200px;">
+        <div class="col-md-5">
+            <div class="card text-white bg-secondary mb-3 text-center" style="padding: 5px;">            
+                <h3>Best-Selling Products</h3>
+            </div>
+        </div>
+        <div class="col-md-5" >
+            <div class="card text-white bg-secondary mb-3 text-center" style="padding: 5px;">    
+                <h3>Best-Selling Category</h3>
+            </div>
+        </div>
+    </div>
+    <!--Start Table-->
+    <div class="row mt-4" style="column-gap: 200px;">
+        <div class="col-md-5">
+            <table class="table table-striped">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Product Category</th>
+                        <th scope="col">Revenue (₹)</th>
+                        <th scope="col">Quantity (Nos.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Product A</th>
+                        <td>Category A</td>
+                        <td>15,000</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Product B</th>
+                        <td>Category B</td>
+                        <td>20,000</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Product C</th>
+                        <td>Category C</td>
+                        <td>10,000</td>
+                        <td>75</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <table class="table table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Category Revenue (₹)</th>
+                        <th scope="col">Quantity (Nos.)</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        
+                        <td>Category A</td>
+                        <td>25,000</td>
+                        <td>125</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Category B</td>
+                        <td>10,000</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Category C</td>
+                        <td>30,000</td>
+                        <td>200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--End Table-->
+<!--Start Maps -->
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card card-transparent">
+                <div class="card-header">
+                    <h4 class="card-title text-center">
+                        Sales Figures by States
+                    </h4>  
+                </div>
+                <div class="card-body">
+                    <div class="col-md-10 ml-auto mr-auto">
+                        <div class="mapcontainer">
+                            <div id="map" class="vmap" style="height: 400px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="mapChart1">
+                <div class="loading">
+                    <i class="icon-spinner icon-spin icon-large"></i>
+                    Loading data from Google Spreadsheets...
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- End Maps -->
+<!--Start Table-->
+    <div class="row mt-4" style="column-gap: 200px;">
+        <div class="col-md-5">
+            <table class="table table-striped">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th scope="col">{{mydata|safe}}{% csrf_token %}</th>
+                        <th scope="col">Product Category</th>
+                        <th scope="col">Revenue (₹)</th>
+                        <th scope="col">Quantity (Nos.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Product A</th>
+                        <td>Category A</td>
+                        <td>15,000</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Product B</th>
+                        <td>Category B</td>
+                        <td>20,000</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Product C</th>
+                        <td>Category C</td>
+                        <td>10,000</td>
+                        <td>75</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <table class="table table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Category Revenue (₹)</th>
+                        <th scope="col">Quantity (Nos.)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td>Category A</td>
+                        <td>25,000</td>
+                        <td>125</td>
+                    </tr>
+                    <tr>
+
+                        <td>Category B</td>
+                        <td>10,000</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+
+                        <td>Category C</td>
+                        <td>30,000</td>
+                        <td>200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--End Table-->
+{% endblock %}

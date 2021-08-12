@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js"></script>
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.css" media="screen" />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+-->
+    
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery-jvectormap.css' %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static 'css/jqvmap.css' %}" type="text/css" media="screen" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- 
+<style>
+    .row {
+  margin-left:-100px;
+  margin-right:-100px;
+
+}
+    .row-1 {
+    background-color: rgb(194, 102, 247);
+    padding-left: 50px;
+    
+    }
+</style>
+-->
+<style>
+.chart-container {
+    width: 1275px;
+    height:300px
+}
+
+#mapChart {
+    height: 500px; 
+    min-width: 310px; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+#mapChart1 {
+    height: 500px; 
+    min-width: 310px; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#chartdiv {
+  width: 100%;
+  height: 350px;
+}
+</style>
+
+</head>
+<body>
+    {% block content %}
+    
+    {% endblock content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+<script>
+    var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+        // Set map definition
+        chart.geodata = am4geodata_worldLow;
+
+        // Set projection
+        chart.projection = new am4maps.projections.Miller();
+
+        // Create map polygon series
+        var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
+        // Make map load polygon (like country names) data from GeoJSON
+        polygonSeries.useGeodata = true;
+
+        // Add some custom data
+        polygonSeries.data = [{
+            "id": "US",
+            "color": am4core.color("#3F4B3B"),
+            "description": {{ustop5|safe}}
+        }, {
+            "id": "CA",
+            "color": am4core.color("#3F4B3B"),
+            
+        }, {
+            "id": "MX",
+            "color": am4core.color("#3F4B3B"),
+        }]
+
+        // Configure series
+        var polygonTemplate = polygonSeries.mapPolygons.template;
+        polygonTemplate.tooltipText = "{name}";
+        polygonTemplate.fill = am4core.color("#5CAB7D");
+        polygonTemplate.propertyFields.fill = "color";
+        polygonTemplate.events.on("hit", function (ev) {
+            var data = ev.target.dataItem.dataContext;
+            var info = document.getElementById("info");
+            info.innerHTML = "<h4>" + data.name + " (" + data.id + ")</h4>";
+            if (data.description) {
+                info.innerHTML += data.description;
+            }
+            else {
+                info.innerHTML += "<i>No description provided.</i>"
+            }
+        });
+
+        // Create hover state and set alternative fill color
+        var hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color("#5A9367");
+
+        // Remove Antarctica
+        polygonSeries.exclude = ["AQ"];
+
+        // Add zoom control
+        chart.zoomControl = new am4maps.ZoomControl();
+</script>
+
+<script>
+
+    const labels2 = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+        
+    const labels1 = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+    const labels3 = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+    
+    const labels4 = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+    const labels5 = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+    const data1 = {
+            label: 'Orders',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30],
+        };
+
+    const data2 =  {
+            label: 'Dispatch',
+            backgroundColor: 'rgb(44, 14, 180)',
+            borderColor: 'rgb(44, 14, 180)',
+            data: [0, 15, 10, 20, 5, 20],
+        };
+  
+    const data3 = {
+            label: 'Supply',
+            backgroundColor: 'rgb(69, 218, 94)',
+            borderColor: 'rgb(69, 218, 94)',
+            data: [0, 17, 5, 8, 10, 40],
+        };
+
+    const data4 = {
+            label: 'Demand',
+            backgroundColor: 'rgb(226, 243, 69)',
+            borderColor: 'rgb(226, 243, 69)',
+            data: [0, 15, 10, 20, 5, 20],
+        };
+    
+    const data5 = {
+            label: 'Revenue',
+            backgroundColor: 'rgb(128, 9, 54)',
+            borderColor: 'rgb(128, 9, 54)',
+            data: [40, 20, 25, 10, 25, 35],
+        };
+
+    const data6 = {
+            label: 'Revenue (Prev. 28 Days)',
+            backgroundColor: 'rgb(120, 224, 250)',
+            borderColor: 'rgb(120, 224, 250)',
+            data: [25, 17, 32, 16, 9, 39],
+        };
+
+    const data7 = {
+            label: 'Revenue',
+            backgroundColor: 'rgb(128, 9, 54)',
+            borderColor: 'rgb(128, 9, 54)',
+            data: [0, 17, 5, 8, 10, 40],
+        };
+
+    const data8 = {
+            label: 'Orders',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 15, 10, 20, 5, 20],
+        };
+
+    const data9 = {
+            label: 'Revenue (Prev. 28 Days)',
+            backgroundColor: 'rgb(120, 224, 250)',
+            borderColor: 'rgb(120, 224, 250)',
+            data: [20, 5, 28, 15, 10, 35],
+        };
+    
+    const data10 = {
+            label: 'Orders (Prev. 28 Days)',
+            backgroundColor: 'rgb(194, 102, 247)',
+            borderColor: 'rgb(194, 102, 247)',
+            data: [30, 10, 20, 12, 35, 40],
+        };
+
+    const data11 = {
+            label: 'Revenue',
+            backgroundColor: 'rgb(194, 102, 247)',
+            borderColor: 'rgb(194, 102, 247)',
+            data: [30, 10, 20, 12, 35, 40],
+        };
+
+    const data12 = {
+            label: 'Total Qty. of Product Ordered',
+            backgroundColor: 'rgb(120, 224, 250)',
+            borderColor: 'rgb(120, 224, 250)',
+            data: [20, 5, 28, 15, 10, 35],
+        };
+    
+    const data13 = {
+            label: 'Revenue (Prev. 28 Days)',
+            backgroundColor: 'rgb(128, 9, 54)',
+            borderColor: 'rgb(128, 9, 54)',
+            data: [0, 15, 10, 20, 5, 20],
+        };
+
+    const data14 = {
+            label: 'Total Qty. of Product Ordered (Prev. 28 Days)',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [25, 17, 32, 16, 19, 39],
+        };
+
+    const data_1 = {
+        labels: labels2,
+        datasets: [data3, data4]
+    };
+
+    const data = {
+        labels: labels1,
+        datasets: [data1, data2]
+    };
+
+    const data_2 = {
+        labels: labels3,
+        datasets: [data5, data6]
+    };
+
+    const data_3 = {
+        labels: labels4,
+        datasets: [data7, data8, data9, data10]
+    };
+
+    const data_4 = {
+            labels: labels5,
+            datasets: [data11, data12, data13, data14]
+        };
+   
+
+    const config_1 = {
+        type: 'line',
+        data: data_1,
+        options: {}
+    };
+    
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+
+    const config_2 = {
+        type: 'line',
+        data: data_2,
+        options: {}
+    };
+
+    const config_3 = {
+        type: 'line',
+        data: data_3,
+        options: {}
+    };
+
+    const config_4 = {
+        type: 'line',
+        data: data_4,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    };
+    // === include 'setup' then 'config' above ===
+
+    
+
+    var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    var myChart_1 = new Chart(
+            document.getElementById('myChart_1'),
+            config_1
+        );
+
+    var myChart_2 = new Chart(
+            document.getElementById('myChart_2'),
+            config_2
+        );
+
+    var myChart_3 = new Chart(
+            document.getElementById('myChart_3'),
+            config_3
+        );
+
+    var myChart_4 = new Chart(
+            document.getElementById('myChart_4'),
+            config_4
+        );
+</script>
+
+<script>
+    // Load the data from a Google Spreadsheet
+    //https://docs.google.com/spreadsheets/d/1WBx3mRqiomXk_ks1a5sEAtJGvYukguhAkcCuRDrY1L0/pubhtml
+    Highcharts.data({
+        googleSpreadsheetKey: '1WBx3mRqiomXk_ks1a5sEAtJGvYukguhAkcCuRDrY1L0',
+
+        // Custom handler when the spreadsheet is parsed
+        parsed: function (columns) {
+
+            // Read the columns into the data array
+            var data = [];
+            Highcharts.each(columns[0], function (code, i) {
+                data.push({
+                    code: code.toUpperCase(),
+                    value: parseFloat(columns[2][i]),
+                    name: columns[1][i]
+                });
+            });
+
+            // Initiate the chart
+
+            Highcharts.mapChart('mapChart1', {
+                chart: {
+                    map: 'custom/world',
+                    borderWidth: 1
+                },
+
+                colors: ['rgba(19,64,117,0.05)', 'rgba(19,64,117,0.2)', 'rgba(19,64,117,0.4)',
+                    'rgba(19,64,117,0.5)', 'rgba(19,64,117,0.6)', 'rgba(19,64,117,0.8)', 'rgba(19,64,117,1)'
+                ],
+
+                title: {
+                    text: 'Sales Figures by States'
+                },
+
+                mapNavigation: {
+                    enabled: true
+                },
+
+                legend: {
+                    title: {
+                        text: 'Sales Figures',
+                        style: {
+                            color: ( // theme
+                                Highcharts.defaultOptions &&
+                                Highcharts.defaultOptions.legend &&
+                                Highcharts.defaultOptions.legend.title &&
+                                Highcharts.defaultOptions.legend.title.style &&
+                                Highcharts.defaultOptions.legend.title.style.color
+                            ) || 'black'
+                        }
+                    },
+                    align: 'left',
+                    verticalAlign: 'bottom',
+                    floating: true,
+                    layout: 'vertical',
+                    valueDecimals: 0,
+                    backgroundColor: ( // theme
+                        Highcharts.defaultOptions &&
+                        Highcharts.defaultOptions.legend &&
+                        Highcharts.defaultOptions.legend.backgroundColor
+                    ) || 'rgba(255, 255, 255, 0.85)',
+                    symbolRadius: 0,
+                    symbolHeight: 14
+                },
+
+                colorAxis: {
+                    dataClasses: [{
+                        to: 3
+                    }, {
+                        from: 3,
+                        to: 10
+                    }, {
+                        from: 10,
+                        to: 30
+                    }, {
+                        from: 30,
+                        to: 100
+                    }, {
+                        from: 100,
+                        to: 300
+                    }, {
+                        from: 300,
+                        to: 1000
+                    }, {
+                        from: 1000
+                    }]
+                },
+
+                series: [{
+                    data: data,
+                    joinBy: ['iso-a3', 'code'],
+                    animation: true,
+                    name: 'Population density',
+                    states: {
+                        hover: {
+                            color: '#a4edba'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: '/km²'
+                    },
+                    shadow: false
+                }]
+            });
+        },
+        error: function () {
+            document.getElementById('mapChart1').innerHTML = '<div class="loading">' +
+                '<i class="icon-frown icon-large"></i> ' +
+                'Error loading data from Google Spreadsheets' +
+                '</div>';
+        }
+    });
+
+</script>
+
+</html>
